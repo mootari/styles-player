@@ -33,7 +33,7 @@ function collectRules() {
 
 
 function deleteRules(rules) {
-    for(var i = rules.length - 1; i; i--) {
+    for(var i = rules.length - 1; i > -1; i--) {
         rules[i].styleSheet.deleteRule(rules[i].index);
     }
 }
@@ -75,7 +75,6 @@ function appendProgressBar() {
             bar.parentNode.removeChild(bar);
         }
     };
-    return bar;
 }
 
 
