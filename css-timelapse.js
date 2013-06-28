@@ -3,16 +3,25 @@ function collectRules() {
     function getRulesFromStyleSheet(styleSheet) {
         var i, cssRule;
         // Cannot access remote stylesheets
-        if(styleSheet.cssRules === null) {
+        try {
+            if(styleSheet.cssRules === null) {
+                return;
+            };
+        } catch(error) {
             return;
-        };
+        }
         for(i = 0; i < styleSheet.cssRules.length; i++) {
             cssRule = styleSheet.cssRules[i];
             if(cssRule.type === window.CSSRule.IMPORT_RULE) {
                 getRulesFromStyleSheet(cssRule.styleSheet);
             }
             else {
-                collectedRules.push({styleSheet: styleSheet, cssRule: cssRule, index: i});
+                collectedRules.push({
+                    styleSheet: styleSheet,
+                    selectorText: cssRule.selectorText,
+                    cssText: cssRule.cssText,
+                    index: i
+                });
             }
         }
     }
@@ -32,20 +41,13 @@ function deleteRules(rules) {
 
 function reinsertRules(rules, delay, callback) {
     function applyRule(index) {
-        var cssText, styleSheet;
+        var styleSheet;
         if(index === rules.length) {
             return;
         }
         styleSheet = rules[index].styleSheet;
-        cssText = rules[index].cssRule.cssText;
-        if(!cssText.length) {
-            return applyRule(index + 1);
-        }
         setTimeout(function() {
-            try {
-                styleSheet.insertRule(cssText, styleSheet.cssRules.length);
-            } catch (err) {
-            }
+            styleSheet.insertRule(rules[index].cssText, styleSheet.cssRules.length);
             if(callback) {
                 callback(rules, index);
             }
@@ -82,7 +84,7 @@ function run(delay) {
     var rules = collectRules();
     deleteRules(rules);
     reinsertRules(rules,delay, function(rules, i) {
-        bar.setText(rules[i].styleSheet.href + "\n" + rules[i].cssRule.selectorText);
+        bar.setText(rules[i].styleSheet.href + "\n" + rules[i].selectorText);
         bar.setProgress(1 / rules.length * (i + 1));
         if(i + 1 === rules.length) {
             bar.remove();
