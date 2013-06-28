@@ -80,7 +80,7 @@ function CSSPlayer(progressCallback) {
         }
         else {
             for(i = currentFrame; i <= targetFrame; i++) {
-                styleSheet = rules[i].styleSheet;
+                styleSheet = frames[i].styleSheet;
                 styleSheet.insertRule(frames[i].cssText, styleSheet.cssRules.length);
             }
         }
