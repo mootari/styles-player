@@ -15,7 +15,6 @@
 
     function initPopup(tab) {
         function wait(parent, properties, callback) {
-            console.log('condition', parent, properties);
             for (var i = 0; i < properties.length; i++) {
                 if (!parent[properties[i]]) {
                     setTimeout(wait, 500, parent, properties, callback);
