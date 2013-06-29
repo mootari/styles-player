@@ -21,7 +21,7 @@
         iframe.style.visibility = 'hidden';
         iframe.onload = function() {
             iframe.removeAttribute('style');
-            tab.window.jQuery(doc).ready(tab.window.playerUi);
+            tab.window.playerUi(tab.window.jQuery);
         };
     }
     initPopup(window.open());
