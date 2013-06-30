@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <a id="bookmarklet">Styles Player</a>
+
+        <script>
+            // The actual bookmarklet code
+            var stylesPlayerBookmarklet = function() {
+                var config, strings, script, abort;
+                config = {
+                    // Change this to the base URL where the project files are hosted
+                    projectUrl:  'https://cisso.github.io/styles-player/src',
+                    // A link to the page where the user may obtain this bookmarklet's most recent version. Used in error messages.
+                    bookmarklet: 'https://cisso.github.io/styles-player',
+                    // This has to match the version variable at the top of launcher.js:launchPlayer().
+                    version:     1306302100
+                };
+                strings = {
+                    errorLoad: "Styles Player could not be loaded.\nPlease try again later or visit %bookmarklet to get an updated version of this bookmarklet.",
+                    errorVersion: "Styles Player has been updated.\nPlease visit %bookmarklet to get the most recent version."
+                };
+
+                // If we didn't get an onload event after 3 seconds, assume a 404
+                abort = setTimeout(function() {
+                    alert(replaceTokens(strings.errorLoad, config));
+                }, 3000);
+                script = document.createElement('script');
+                script.src = config.projectUrl + '/launcher.js';
+                script.onload = function() {
+                    clearTimeout(abort);
+                    if(!launchPlayer || !launchPlayer(config.version, window.location, config.projectUrl)) {
+                        alert(replaceTokens(strings.errorVersion, config));
+                    }
+                };
+                document.body.appendChild(script);
+                function replaceTokens(string, tokens) {
+                    return string.replace(/%(\w+)/g, function(token, tokenName) {
+                        return tokens.hasOwnProperty(tokenName) ? tokens[tokenName] : token;
+                    });
+                }
+            };
+        </script>
+
+        <script type="text/javascript" src="http://base2.googlecode.com/svn/trunk/lib/base2-jsb-fp.js"></script>
+        <script type="text/javascript" src="http://base2.googlecode.com/svn/trunk/lib/packer-p.js"></script>
+        <script>
+            function functionToUrl(func) {
+                var url = (new Packer).pack('(' + func.toString() + '())', true, true, true);
+                return encodeURI('javascript:' + url);
+            }
+            document.getElementById('bookmarklet').href = functionToUrl(stylesPlayerBookmarklet);
+        </script>
+    </body>
+</html>
