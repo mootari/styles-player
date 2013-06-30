@@ -69,7 +69,7 @@ body {
     height: 100%;
 }
 .button:hover {
-    background: #222;
+    background: #444;
 }
 .button:before {
     content: "";
@@ -117,6 +117,62 @@ body {
     padding: 10px;
     z-index: 2;
     line-height: 1.15em;
+}
+.zoom {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
+}
+.zoom > span {
+    display: block;
+    position: absolute;
+    top: 0;
+    padding-top: 2px;
+    line-height: 23px;
+    text-align: center;
+}
+.zoom .increase:hover,
+.zoom .decrease:hover,
+.zoom .fit:hover,
+.zoom .reset:hover {
+    background-color: #444;
+}
+.zoom .increase,
+.zoom .decrease {
+    width: 17px;
+    height: 8px;
+    right: 110px;
+    line-height: 8px;
+    border: 1px solid #222;
+    border-radius: 5px;
+    top: 2px;
+}
+.zoom .increase {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.zoom .decrease {
+    top: 13px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.zoom .current {
+    width: 45px;
+    right: 60px;
+    text-align: right;
+    padding-right: 5px;
+}
+.zoom .fit {
+    width: 30px;
+    right: 30px;
+    word-spacing: 6px;
+    padding-top: 1px;
+    line-height: 24px;
+}
+.zoom .reset {
+    width: 30px;
+    right: 0;
 }
 
 /* Colors */
