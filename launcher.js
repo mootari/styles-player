@@ -39,7 +39,7 @@ function launchPlayer(requiredVersion, location, projectUrl) {
     function openWindow(callback) {
         var tab, features;
         features = ['left=0', 'top=0', 'width=' + screen.width, 'height=' + screen.height];
-        tab = window.open(null, null, features.join(','));
+        tab = window.open(null, '_blank', features.join(','));
         setTimeout(function() {
             if(!tab || tab.closed || (typeof tab.closed == 'undefined') || !tab.outerHeight || !tab.outerWidth) {
                 alert('Styles Player could not load. Please enable popups for this website.');
